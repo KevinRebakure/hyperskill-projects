@@ -13,7 +13,7 @@ import java.util.Scanner;
 // PROGRAM FLOW
 // -------------
 // 1. ✅ Print out all seats in the room
-// 2. Mark the chosen seat with B symbol
+// 2. ✅ Mark the chosen seat with B symbol
 // 3. Print ticket price
 
 
