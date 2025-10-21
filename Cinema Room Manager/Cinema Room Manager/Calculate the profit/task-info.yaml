@@ -9,9 +9,12 @@ files:
   - name: src/cinema/Seats.java
     visible: true
     learner_created: true
-  - name: src/cinema/ReadInput.java
+  - name: src/cinema/Pricing.java
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/projects/133/stages/710/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Tue, 21 Oct 2025 19:07:39 UTC"
 record: 2
