@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 // PROGRAM FLOW
 // -------------
-// 1. Print out all seats in the room
+// 1. ✅ Print out all seats in the room
 // 2. Mark the chosen seat with B symbol
 // 3. Print ticket price
 
@@ -31,16 +31,7 @@ public class Cinema {
         Scanner scanner = new Scanner(System.in);
         Seats seats = new Seats(scanner);
 
-        Pricing pricingModal = new Pricing(seats.getRows(), seats.getSeatsPerRow());
-
-        int total = pricingModal.calculatePricing();
-
-        System.out.println("Total income:");
-        System.out.printf("$%d", total);
-        System.out.println();
-
-        System.out.println("Selected row "+ seats.getSelectedRowNumber());
-        System.out.println("Selected seat "+ seats.getSelectedSeatNumber());
+        seats.printSeats();
 
         scanner.close();
     }
