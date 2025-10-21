@@ -1,9 +1,22 @@
 package cinema;
 
-// ✅ read: number of rows
-// ✅ read: number of seats in each row
-// ✅ determine the ticket price
-//
+import java.util.Scanner;
+
+//☑️ read number of rows
+// ️☑️ read number of seats in each row
+
+// ✅ read row number
+// ✅ read seat number
+
+// same rules as the previous task
+
+// PROGRAM FLOW
+// -------------
+// 1. Print out all seats in the room
+// 2. Mark the chosen seat with B symbol
+// 3. Print ticket price
+
+
 // CONDITIONS
 // ----------
 // if number of seats is not >60 - each seat $10
@@ -11,9 +24,6 @@ package cinema;
 //                   2nd back half - each seat $8
 // if number of rows is odd like 9, the first half is 4, second 5
 // number of rows and seats won't be greater than 9
-
-
-import java.util.Scanner;
 
 public class Cinema {
 
@@ -27,6 +37,10 @@ public class Cinema {
 
         System.out.println("Total income:");
         System.out.printf("$%d", total);
+        System.out.println();
+
+        System.out.println("Selected row "+ seats.getSelectedRowNumber());
+        System.out.println("Selected seat "+ seats.getSelectedSeatNumber());
 
         scanner.close();
     }

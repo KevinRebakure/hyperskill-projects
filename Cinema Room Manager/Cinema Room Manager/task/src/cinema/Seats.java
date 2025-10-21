@@ -7,27 +7,32 @@ public class Seats {
     private int seatsPerRow;
     private final int totalSeats;
     private final Scanner scanner;
+    private int selectedRowNumber;
+    private int selectedSeatNumber;
 
     public Seats(Scanner scanner) {
         this.scanner = scanner;
-        this.rows = readValue("Enter the number of rows: ");
-        this.seatsPerRow = readValue("Enter the number of seats in each row: ");
+        this.rows = readValue("Enter the number of rows: ", 1, 9);
+        this.seatsPerRow = readValue("Enter the number of seats in each row: ", 1, 9);
+        this.selectedRowNumber = readValue("Enter a row number", 1, rows);
+        this.selectedSeatNumber = readValue("Enter a seat number in that row: ", 1, seatsPerRow);
         this.totalSeats = this.rows + this.seatsPerRow;
     }
 
-    private byte readValue(String message) {
+    private byte readValue(String message, int min, int max) {
         System.out.println(message);
         assert scanner != null;
-        byte seats = scanner.nextByte();
+        byte value = scanner.nextByte();
 
-        while (seats <= 0 || seats > 9) {
-            System.out.println("Please enter a value between 1 and 9: ");
+        while (value < min || value > max) {
+            System.out.printf("Please enter a value between %d and %d: %n", min, max);
+            System.out.println();
 
-            seats = scanner.nextByte();
+            value = scanner.nextByte();
             System.out.println();
         }
 
-        return seats;
+        return value;
     }
 
     public int getRows() {
@@ -50,6 +55,14 @@ public class Seats {
 
     public int getTotalSeats() {
         return totalSeats;
+    }
+
+    public int getSelectedRowNumber() {
+        return selectedRowNumber;
+    }
+
+    public int getSelectedSeatNumber() {
+        return selectedSeatNumber;
     }
 
     public void printSeats() {
