@@ -32,6 +32,8 @@ public class Cinema {
         Seats seats = new Seats(scanner);
 
         seats.printSeats();
+        System.out.println("See chosen seat");
+        seats.showChosenSeat();
 
         scanner.close();
     }

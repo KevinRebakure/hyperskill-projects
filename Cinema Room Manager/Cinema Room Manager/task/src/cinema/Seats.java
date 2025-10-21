@@ -79,4 +79,35 @@ public class Seats {
             }
         }
     }
+
+    public void showChosenSeat() {
+        System.out.println("Cinema: ");
+        for (int i = 0; i < rows + 1 ; i++) {
+            if (i == 0) {
+                System.out.print("  ");
+                for (int j = 1; j < seatsPerRow + 1; j++) {
+                    System.out.print(j + " ");
+                }
+                System.out.println();
+            } else {
+                if (i == selectedRowNumber) {
+                    printChosenRow(i);
+                } else {
+                    System.out.println(i + " " +"S ".repeat(seatsPerRow));
+                }
+            }
+        }
+    }
+
+    private void printChosenRow(int rowNumber) {
+        System.out.print(rowNumber);
+        for (int i = 1; i <= seatsPerRow; i++) {
+            if (i != selectedSeatNumber) {
+                System.out.print(" S");
+            } else {
+                System.out.print(" B");
+            }
+        }
+        System.out.println();
+    }
 }
