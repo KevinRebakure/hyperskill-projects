@@ -11,7 +11,7 @@ public class Pricing {
         totalSeats = rows * seatsPerRow;
     }
 
-    public int calculatePricing() {
+    public int calculateRevenue() {
         if (totalSeats <= 60) {
             return totalSeats * 10;
         }
@@ -25,5 +25,13 @@ public class Pricing {
             int secondHalf = rows - firstHalf;
             return (firstHalf * seatsPerRow * 10) + (secondHalf * seatsPerRow * 8);
         }
+    }
+
+    public int ticketPrice(int rowNumber) {
+        if (totalSeats <= 60) return 10;
+
+        boolean sittingInFirstHalf = rowNumber <= rows / 2;
+
+        return sittingInFirstHalf ? 10 : 8;
     }
 }

@@ -7,8 +7,8 @@ public class Seats {
     private int seatsPerRow;
     private final int totalSeats;
     private final Scanner scanner;
-    private int selectedRowNumber;
-    private int selectedSeatNumber;
+    private final int selectedRowNumber;
+    private final int selectedSeatNumber;
 
     public Seats(Scanner scanner) {
         this.scanner = scanner;
@@ -33,36 +33,6 @@ public class Seats {
         }
 
         return value;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public void setRows(int rows) {
-        // TODO: safe guard
-        this.rows = rows;
-    }
-
-    public int getSeatsPerRow() {
-        return seatsPerRow;
-    }
-
-    public void setSeatsPerRow(int seatsPerRow) {
-        // TODO: safe guard
-        this.seatsPerRow = seatsPerRow;
-    }
-
-    public int getTotalSeats() {
-        return totalSeats;
-    }
-
-    public int getSelectedRowNumber() {
-        return selectedRowNumber;
-    }
-
-    public int getSelectedSeatNumber() {
-        return selectedSeatNumber;
     }
 
     public void printSeats() {
@@ -109,5 +79,35 @@ public class Seats {
             }
         }
         System.out.println();
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        // TODO: safe guard
+        this.rows = rows;
+    }
+
+    public int getSeatsPerRow() {
+        return seatsPerRow;
+    }
+
+    public void setSeatsPerRow(int seatsPerRow) {
+        // TODO: safe guard
+        this.seatsPerRow = seatsPerRow;
+    }
+
+    public int getTotalSeats() {
+        return totalSeats;
+    }
+
+    public int getSelectedRowNumber() {
+        return selectedRowNumber;
+    }
+
+    public int getSelectedSeatNumber() {
+        return selectedSeatNumber;
     }
 }
