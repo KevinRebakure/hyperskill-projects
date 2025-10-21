@@ -13,13 +13,8 @@ files:
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/projects/133/stages/711/implement#comment
-status: Failed
+status: Solved
 feedback:
-  message: "Wrong answer in test #1\n\nAfter entering a row number and a seat number\
-    \ in that row you should print the seating arrangement like in example!\nYour\
-    \ output should contain &#39;Cinema:&#39;\n\nPlease find below the output of your\
-    \ program during this failed test.\nNote that the &#39;&gt;&#39; character indicates\
-    \ the beginning of the input line.\n\n---\n\nEnter the number of rows: \n&gt;\
-    \ 7\nEnter the number of seats in each row: \n&gt; 8\nEnter a row number"
-  time: "Tue, 21 Oct 2025 20:26:27 UTC"
+  message: Congratulations!
+  time: "Tue, 21 Oct 2025 20:32:23 UTC"
 record: 3

@@ -35,7 +35,10 @@ public class Cinema {
         seats.printSeats();
         System.out.println();
 
-        int ticketPrice = pricingModal.ticketPrice(seats.getSelectedRowNumber());
+        seats.selectARow();
+        seats.selectASeat();
+
+        int ticketPrice = pricingModal.ticketPrice(seats.getSelectedRow());
         System.out.printf("Ticket price: $%d", ticketPrice);
         System.out.println();
         System.out.println();

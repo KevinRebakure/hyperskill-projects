@@ -7,15 +7,13 @@ public class Seats {
     private int seatsPerRow;
     private final int totalSeats;
     private final Scanner scanner;
-    private final int selectedRowNumber;
-    private final int selectedSeatNumber;
+    private int selectedRowNumber;
+    private int selectedSeatNumber;
 
     public Seats(Scanner scanner) {
         this.scanner = scanner;
         this.rows = readValue("Enter the number of rows: ", 1, 9);
         this.seatsPerRow = readValue("Enter the number of seats in each row: ", 1, 9);
-        this.selectedRowNumber = readValue("Enter a row number", 1, rows);
-        this.selectedSeatNumber = readValue("Enter a seat number in that row: ", 1, seatsPerRow);
         this.totalSeats = this.rows + this.seatsPerRow;
     }
 
@@ -103,11 +101,19 @@ public class Seats {
         return totalSeats;
     }
 
-    public int getSelectedRowNumber() {
+    public int getSelectedRow() {
         return selectedRowNumber;
     }
 
-    public int getSelectedSeatNumber() {
+    public int getSelectedSeat() {
         return selectedSeatNumber;
+    }
+
+    public void selectARow() {
+        this.selectedRowNumber = readValue("Enter a row number:", 1, rows);
+    }
+
+    public void selectASeat() {
+        this.selectedSeatNumber = readValue("Enter a seat number in that row:", 1, seatsPerRow);
     }
 }
