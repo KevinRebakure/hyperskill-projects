@@ -8,45 +8,68 @@ public class CoffeeMachineTest extends StageTest<String> {
     @Override
     public List<TestCase<String>> generate() {
         return List.of(
-                new TestCase<String>()
-                        .setInput("")
-                        .setAttach("Starting to make a coffee\n" +
-                                "Grinding coffee beans\n" +
-                                "Boiling water\n" +
-                                "Mixing boiled water with crushed coffee beans\n" +
-                                "Pouring coffee into the cup\n" +
-                                "Pouring some milk into the cup\n" +
-                                "Coffee is ready!")
+            new TestCase<String>()
+                .setInput("25")
+                .setAttach("25"),
+
+            new TestCase<String>()
+                .setInput("125")
+                .setAttach("125"),
+
+            new TestCase<String>()
+                .setInput("1")
+                .setAttach("1"),
+
+            new TestCase<String>()
+                .setInput("123")
+                .setAttach("123")
         );
     }
 
     @Override
     public CheckResult check(String reply, String clue) {
-        String[] expectedPhrases = {
-                "Starting to make a coffee",
-                "Grinding coffee beans",
-                "Boiling water",
-                "Mixing boiled water with crushed coffee beans",
-                "Pouring coffee into the cup",
-                "Pouring some milk into the cup",
-                "Coffee is ready!"
+        String[] lines = reply.split("\\n");
+        if (lines.length < 4) {
+            return CheckResult.wrong("The output contains " + lines.length + " lines, but it should contain 4.");
+        }
+        String[] last3Lines = {
+                lines[lines.length - 3],
+                lines[lines.length - 2],
+                lines[lines.length - 1]
         };
 
-        String[] actualPhrases = reply.trim().split("\n");
+        int cups = Integer.parseInt(clue);
+        boolean hasWater = false, hasMilk = false, hasCoffeeBeans = false;
 
-        if (expectedPhrases.length != actualPhrases.length) {
-            return CheckResult.wrong(
-                    "Expected " + expectedPhrases.length + " phrases but got " + actualPhrases.length
-            );
+        for (String line : last3Lines) {
+            line = line.toLowerCase();
+
+            if (line.contains("water")) {
+                hasWater = line.contains(Integer.toString(cups * 200));
+                if (!hasWater) {
+                    return CheckResult.wrong("For the input: " + clue + " cups of coffee\nYour program output: " + line + "\nBut the required amount of water is " + (cups * 200) + " ml");
+                }
+            } else if (line.contains("milk")) {
+                hasMilk = line.contains(Integer.toString(cups * 50));
+                if (!hasMilk) {
+                    return CheckResult.wrong("For the input: " + clue + " cups of coffee\nYour program output: " + line + "\nBut the required amount of milk is " + (cups * 50) + " ml");
+                }
+            } else if (line.contains("coffee bean")) {
+                hasCoffeeBeans = line.contains(Integer.toString(cups * 15));
+                if (!hasCoffeeBeans) {
+                    return CheckResult.wrong("For the input: " + clue + " cups of coffee\nYour program output: " + line + "\nBut the required amount of coffee beans is " + (cups * 15) + " g");
+                }
+            }
         }
 
-        for (int i = 0; i < expectedPhrases.length; i++) {
-            if (!actualPhrases[i].trim().toLowerCase().equals(expectedPhrases[i].trim().toLowerCase())) {
-                return CheckResult.wrong(
-                        "Expected: \"" + expectedPhrases[i] + "\", but got: \"" + actualPhrases[i] + "\".\n" +
-                                "The phrase \"" + expectedPhrases[i] + "\" is either missing or is not in the correct order, in the output."
-                );
-            }
+        if (!hasWater) {
+            return CheckResult.wrong("There is no line specifying the required amount of \"water\".");
+        }
+        if (!hasMilk) {
+            return CheckResult.wrong("There is no line specifying the required amount of \"milk\".");
+        }
+        if (!hasCoffeeBeans) {
+            return CheckResult.wrong("There is no line specifying the required amount of \"coffee beans\".");
         }
 
         return CheckResult.correct();
