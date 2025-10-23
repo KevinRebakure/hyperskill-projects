@@ -11,6 +11,12 @@ public class CoffeeMachine {
     public static void main(String[] args) {
         Scanner readInput = new Scanner(System.in);
 
+        Store store = new Store(400, 540, 120, 9, 550);
+
+        readInput.close();
+    }
+
+    private static void calculateIngredients(Scanner readInput) {
         System.out.println("Write how many ml of water the coffee machine has: ");
         int waterCapacityInml = readInput.nextInt();
 
@@ -34,8 +40,6 @@ public class CoffeeMachine {
         } else {
             System.out.println("Yes, I can make that amount of coffee");
         }
-
-        readInput.close();
     }
 
     public static int calculateNumberOfCupsToMake(
@@ -52,3 +56,23 @@ public class CoffeeMachine {
         return Arrays.stream(amounts).min().getAsInt();
     }
 }
+
+// STEP 1.
+// buy
+// fill
+// take
+
+// STEP 2. buy
+// choose: (1) espresso, (2) latte, (3) cappuccino
+// espresso - 250ml water, 16g beans -- $4
+// latte - 350 ml water, 75ml milk, 20g beans -- $7
+// cappuccino - 200ml water, 100ml milk, 12g beans - $6
+
+// STEP 3. fill
+// water
+// milk
+// beans
+// cups
+
+// STEP 4. take
+// give out all the money

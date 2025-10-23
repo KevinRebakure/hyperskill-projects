@@ -6,6 +6,18 @@ files:
   - name: test/CoffeeMachineTest.java
     visible: false
     learner_created: false
+  - name: src/machine/Buy.java
+    visible: true
+    learner_created: true
+  - name: src/machine/Fill.java
+    visible: true
+    learner_created: true
+  - name: src/machine/CollectMoney.java
+    visible: true
+    learner_created: true
+  - name: src/machine/Store.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/33/stages/178/implement#comment
 status: Unchecked
-record: -1
+record: 4
