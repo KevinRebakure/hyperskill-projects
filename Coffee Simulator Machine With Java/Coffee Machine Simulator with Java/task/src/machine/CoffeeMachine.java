@@ -13,6 +13,34 @@ public class CoffeeMachine {
 
         Store store = new Store(400, 540, 120, 9, 550);
 
+
+        System.out.println("The coffee machine has:");
+        System.out.println(String.format("%d ml of water", store.getWater()));
+        System.out.println(String.format("%d ml of milk", store.getMilk()));
+        System.out.println(String.format("%d g of coffee beans", store.getCoffeeBeans()));
+        System.out.println(String.format("$%d of money", store.getMoney()));
+
+
+        // choose: (1) espresso, (2) latte, (3) cappuccino
+        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
+        String choice = switch (readInput.nextInt()) {
+            case 1 -> "espresso";
+            case 2 -> "latte";
+            case 3 -> "cappuccino";
+            default -> "Invalid";
+        };
+
+        while (choice.equals("Invalid")) {
+            choice = switch (readInput.nextInt()) {
+                case 1 -> "espresso";
+                case 2 -> "latte";
+                case 3 -> "cappuccino";
+                default -> "Invalid";
+            };
+        }
+
+        Buy buy = new Buy(choice, store);
+        buy.buyCoffee();
         readInput.close();
     }
 
@@ -62,11 +90,6 @@ public class CoffeeMachine {
 // fill
 // take
 
-// STEP 2. buy
-// choose: (1) espresso, (2) latte, (3) cappuccino
-// espresso - 250ml water, 16g beans -- $4
-// latte - 350 ml water, 75ml milk, 20g beans -- $7
-// cappuccino - 200ml water, 100ml milk, 12g beans - $6
 
 // STEP 3. fill
 // water
