@@ -10,37 +10,30 @@ public class CoffeeMachine {
 
     public static void main(String[] args) {
         Scanner readInput = new Scanner(System.in);
-
         Store store = new Store(400, 540, 120, 9, 550);
+        Message message = new Message(store);
+        Inputs input = new Inputs(readInput);
 
 
-        System.out.println("The coffee machine has:");
-        System.out.println(String.format("%d ml of water", store.getWater()));
-        System.out.println(String.format("%d ml of milk", store.getMilk()));
-        System.out.println(String.format("%d g of coffee beans", store.getCoffeeBeans()));
-        System.out.println(String.format("$%d of money", store.getMoney()));
+        message.startApp();
+        String action  = input.chooseAction();
 
-
-        // choose: (1) espresso, (2) latte, (3) cappuccino
-        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
-        String choice = switch (readInput.nextInt()) {
-            case 1 -> "espresso";
-            case 2 -> "latte";
-            case 3 -> "cappuccino";
-            default -> "Invalid";
-        };
-
-        while (choice.equals("Invalid")) {
-            choice = switch (readInput.nextInt()) {
-                case 1 -> "espresso";
-                case 2 -> "latte";
-                case 3 -> "cappuccino";
-                default -> "Invalid";
-            };
+        switch (action) {
+            case "buy":
+                String coffeChoice = input.chooseCoffee();
+                Buy buy = new Buy(coffeChoice, store);
+                buy.buyCoffee();
+                break;
+            case "fill":
+                System.out.println("Filling");
+                break;
+            case "take":
+                System.out.println("Correct money");
+                break;
+            default:
+                System.out.println("Server error!");
         }
 
-        Buy buy = new Buy(choice, store);
-        buy.buyCoffee();
         readInput.close();
     }
 

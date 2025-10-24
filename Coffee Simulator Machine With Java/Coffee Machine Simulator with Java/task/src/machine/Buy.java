@@ -19,10 +19,9 @@ public class Buy {
     }
 
     public void buyCoffee() {
-        System.out.println("BUYING COFFEE");
         switch (type) {
             case "espresso":
-                store.setWater(checkIfAvailable(store.getWater(), 250, "ml"));
+                store.setWater(checkIfAvailable(store.getWater(), 1000, "ml"));
                 store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 16, "g"));
                 store.setCups(checkIfAvailable(store.getCups(), 1, "cups"));
                 pay(4);
@@ -56,7 +55,7 @@ public class Buy {
         if (capacity >= request) {
             return capacity - request;
         } else {
-            System.out.printf("Not enough water. We only have %d and your %s request require at least %d %s. Please refill the coffee machine", capacity, type, request, unit);
+            System.out.printf("Not enough water. We only have %d %s and your %s request require at least %d %s. Please refill the coffee machine", capacity, unit, type, request, unit);
             coffeMade = false;
             return capacity;
         }
