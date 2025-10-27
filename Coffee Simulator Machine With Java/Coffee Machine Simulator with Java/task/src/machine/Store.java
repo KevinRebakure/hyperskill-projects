@@ -25,7 +25,6 @@ public class Store {
         this.money = money;
     }
 
-
     public int getWater() {
         return water;
     }

@@ -2,6 +2,7 @@ package machine;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 public class Inputs {
     private final Scanner readInput;
@@ -20,10 +21,8 @@ public class Inputs {
         while (!isValid) {
             System.out.println("Please choose between (buy, fill, take):");
 
-            String anotherChoice = readInput.nextLine();
             choice = readInput.nextLine();
-
-            isValid = Arrays.asList(validChoices).contains(anotherChoice);
+            isValid = Arrays.asList(validChoices).contains(choice);
         }
 
         return choice;
@@ -32,20 +31,21 @@ public class Inputs {
     public String chooseCoffee() {
         // choose: (1) espresso, (2) latte, (3) cappuccino
         System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
-        String choice = switch (readInput.next()) {
-            case "1" -> "espresso";
-            case "2" -> "latte";
-            case "3" -> "cappuccino";
-            default -> "Invalid";
-        };
 
-        while (choice.equals("Invalid")) {
-            choice = switch (readInput.next()) {
+        Supplier<String> choiceSwitch = () -> {
+            return switch (readInput.nextLine()) {
                 case "1" -> "espresso";
                 case "2" -> "latte";
                 case "3" -> "cappuccino";
                 default -> "Invalid";
             };
+        };
+
+        String choice = choiceSwitch.get();
+
+        while (choice.equals("Invalid")) {
+            System.out.println("Please enter 1 - espresso, 2 - latte, 3 - cappuccino:");
+            choice = choiceSwitch.get();
         }
 
         return choice;

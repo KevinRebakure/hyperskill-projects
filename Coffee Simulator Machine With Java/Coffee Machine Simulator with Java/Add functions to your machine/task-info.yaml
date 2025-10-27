@@ -7,17 +7,5 @@ files:
     visible: false
     learner_created: false
 feedback_link: https://hyperskill.org/projects/33/stages/178/implement#comment
-status: Failed
-feedback:
-  message: "Exception in test #1\n\nProbably you have nextInt() (or similar Scanner\
-    \ method) followed by nextLine() - in this situation nextLine() often gives an\
-    \ empty string and another one nextLine() call gives correct string.\n\njava.util.InputMismatchException\n\
-    \tat java.base/java.util.Scanner.throwFor(Scanner.java:947)\n\tat java.base/java.util.Scanner.next(Scanner.java:1602)\n\
-    \tat java.base/java.util.Scanner.nextInt(Scanner.java:2267)\n\tat java.base/java.util.Scanner.nextInt(Scanner.java:2221)\n\
-    \tat machine.CoffeeMachine.main(CoffeeMachine.java:26)\n\nPlease find below the\
-    \ output of your program during this failed test.\nNote that the &#39;&gt;&#39;\
-    \ character indicates the beginning of the input line.\n\n---\n\nThe coffee machine\
-    \ has:\n400 ml of water\n540 ml of milk\n120 g of coffee beans\n$550 of money\n\
-    What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: \n&gt; take"
-  time: "Fri, 24 Oct 2025 15:28:17 UTC"
+status: Unchecked
 record: 4

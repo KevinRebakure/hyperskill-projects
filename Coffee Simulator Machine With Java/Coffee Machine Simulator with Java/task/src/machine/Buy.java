@@ -21,7 +21,7 @@ public class Buy {
     public void buyCoffee() {
         switch (type) {
             case "espresso":
-                store.setWater(checkIfAvailable(store.getWater(), 1000, "ml"));
+                store.setWater(checkIfAvailable(store.getWater(), 250, "ml"));
                 store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 16, "g"));
                 store.setCups(checkIfAvailable(store.getCups(), 1, "cups"));
                 pay(4);

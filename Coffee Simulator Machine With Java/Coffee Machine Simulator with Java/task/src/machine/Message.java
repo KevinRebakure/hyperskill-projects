@@ -6,7 +6,7 @@ public class Message {
         this.store = store;
     }
 
-    public void startApp() {
+    public void showCurrentMachineStatus() {
         System.out.println("The coffee machine has:");
         System.out.println(String.format("%d ml of water", store.getWater()));
         System.out.println(String.format("%d ml of milk", store.getMilk()));

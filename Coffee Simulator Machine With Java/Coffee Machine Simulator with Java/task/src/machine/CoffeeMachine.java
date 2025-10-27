@@ -13,25 +13,37 @@ public class CoffeeMachine {
         Store store = new Store(400, 540, 120, 9, 550);
         Message message = new Message(store);
         Inputs input = new Inputs(readInput);
+        Fill refill = new Fill(readInput, store, message);
 
 
-        message.startApp();
+        message.showCurrentMachineStatus();
         String action  = input.chooseAction();
 
-        switch (action) {
-            case "buy":
-                String coffeChoice = input.chooseCoffee();
-                Buy buy = new Buy(coffeChoice, store);
-                buy.buyCoffee();
-                break;
-            case "fill":
-                System.out.println("Filling");
-                break;
-            case "take":
-                System.out.println("Correct money");
-                break;
-            default:
-                System.out.println("Server error!");
+        while (!action.equals("exit")) {
+            switch (action) {
+                case "buy":
+                    String coffeChoice = input.chooseCoffee();
+                    Buy buy = new Buy(coffeChoice, store);
+                    buy.buyCoffee();
+                    break;
+                case "fill":
+                    refill.refill();
+                    break;
+                case "take":
+                    System.out.println("Correct money");
+                    Finances finances = new Finances(store);
+                    int currentRevenue = finances.take();
+
+                    System.out.printf("I gave you $%d", currentRevenue);
+                    System.out.println();
+                    message.showCurrentMachineStatus();
+
+                    break;
+                default:
+                    System.out.println("Server error!");
+            }
+
+            action = input.chooseAction();
         }
 
         readInput.close();
