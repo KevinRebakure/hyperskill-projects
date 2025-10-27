@@ -31,8 +31,6 @@ public class Fill {
             System.out.println("Write how many disposable cups you want to add: ");
             int cups = readInput.nextInt();
             store.setCups(store.getCups() + cups);
-
-            message.showCurrentMachineStatus();
         } catch (InputMismatchException e) {
             System.out.println("Please enter valid numbers!");
         }

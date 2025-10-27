@@ -1,11 +1,5 @@
 package machine;
 
-// STEP 2. buy
-// choose: (1) espresso, (2) latte, (3) cappuccino
-// espresso - 250ml water, 16g beans -- $4
-// latte - 350 ml water, 75ml milk, 20g beans -- $7
-// cappuccino - 200ml water, 100ml milk, 12g beans - $6
-
 public class Buy {
     private final String type;
     private final Store store;
@@ -23,37 +17,37 @@ public class Buy {
     public void buyCoffee() {
         switch (type) {
             case "espresso":
-                store.setWater(checkIfAvailable(store.getWater(), 250, "ml"));
-                store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 16, "g"));
-                store.setCups(checkIfAvailable(store.getCups(), 1, "cups"));
+                store.setWater(checkIfAvailable(store.getWater(), 250, "ml", "water"));
+                store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 16, "g", "beans"));
+                store.setCups(checkIfAvailable(store.getCups(), 1, "cups", "cups"));
                 pay(4);
                 break;
             case "latte":
-                store.setWater(checkIfAvailable(store.getWater(), 350, "ml"));
-                store.setMilk(checkIfAvailable(store.getMilk(), 75, "ml"));
-                store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 20, "g"));
-                store.setCups(checkIfAvailable(store.getCups(), 1, "cups"));
+                store.setWater(checkIfAvailable(store.getWater(), 350, "ml", "water"));
+                store.setMilk(checkIfAvailable(store.getMilk(), 75, "ml", "milk"));
+                store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 20, "g", "beans"));
+                store.setCups(checkIfAvailable(store.getCups(), 1, "cups", "cups"));
                 pay(7);
                 break;
             case "cappuccino":
-                store.setWater(checkIfAvailable(store.getWater(), 200, "ml"));
-                store.setMilk(checkIfAvailable(store.getMilk(), 100, "ml"));
-                store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 12, "g"));
-                store.setCups(checkIfAvailable(store.getCups(), 1, "cups"));
+                store.setWater(checkIfAvailable(store.getWater(), 200, "ml", "water"));
+                store.setMilk(checkIfAvailable(store.getMilk(), 100, "ml", "milk"));
+                store.setCoffeeBeans(checkIfAvailable(store.getCoffeeBeans(), 12, "g", "beans"));
+                store.setCups(checkIfAvailable(store.getCups(), 1, "cups", "cups"));
                 pay(6);
                 break;
             case null, default:
                 System.out.println("Invalid type");
         }
-
-        message.showCurrentMachineStatus();
     }
 
-    private int checkIfAvailable(int capacity, int request, String unit) {
+    private int checkIfAvailable(int capacity, int request, String unit, String resource) {
         if (capacity >= request) {
             return capacity - request;
         } else {
-            System.out.printf("Not enough water. We only have %d %s and your %s request require at least %d %s. Please refill the coffee machine", capacity, unit, type, request, unit);
+            System.out.printf("Sorry, not enough %s", resource);
+            System.out.println();
+//            System.out.printf("Not enough water. We only have %d %s and your %s request require at least %d %s. Please refill the coffee machine", capacity, unit, type, request, unit);
             coffeMade = false;
             return capacity;
         }
@@ -62,6 +56,7 @@ public class Buy {
     private void pay(int amount) {
         if (coffeMade) {
             store.setMoney(store.getMoney() + amount);
+            message.haveEnoughResources();
         }
     }
 }

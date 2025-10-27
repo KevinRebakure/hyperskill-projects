@@ -15,4 +15,8 @@ public class Message {
         System.out.println(String.format("$%d of money", store.getMoney()));
         System.out.println();
     }
+
+    public void haveEnoughResources() {
+        System.out.println("I have enough resources, making you a coffee!");
+    }
 }

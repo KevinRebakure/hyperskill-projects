@@ -17,29 +17,37 @@ public class CoffeeMachine {
 
 
         message.showCurrentMachineStatus();
-        String action  = input.chooseAction();
 
-        switch (action) {
-            case "buy":
-                String coffeChoice = input.chooseCoffee();
-                Buy buy = new Buy(coffeChoice, store, message);
-                buy.buyCoffee();
-                break;
-            case "fill":
-                refill.refill();
-                break;
-            case "take":
-                System.out.println("Correct money");
-                Finances finances = new Finances(store);
-                int currentRevenue = finances.take();
+        while (true) {
+            String action  = input.chooseAction();
 
-                System.out.printf("I gave you $%d", currentRevenue);
-                System.out.println();
-                message.showCurrentMachineStatus();
+            if (action.equals("exit")) break;
 
-                break;
-            default:
-                System.out.println("Server error!");
+            switch (action) {
+                case "buy":
+                    String coffeChoice = input.chooseCoffee();
+                    Buy buy = new Buy(coffeChoice, store, message);
+                    buy.buyCoffee();
+                    break;
+                case "fill":
+                    refill.refill();
+                    break;
+                case "take":
+                    System.out.println("Correct money");
+                    Finances finances = new Finances(store);
+                    int currentRevenue = finances.take();
+
+                    System.out.printf("I gave you $%d", currentRevenue);
+                    System.out.println();
+                    message.showCurrentMachineStatus();
+
+                    break;
+                case "remaining":
+                    message.showCurrentMachineStatus();
+                    break;
+                default:
+                    System.out.println("Server error!");
+            }
         }
 
         readInput.close();
@@ -85,18 +93,3 @@ public class CoffeeMachine {
         return Arrays.stream(amounts).min().getAsInt();
     }
 }
-
-// STEP 1.
-// buy
-// fill
-// take
-
-
-// STEP 3. fill
-// water
-// milk
-// beans
-// cups
-
-// STEP 4. take
-// give out all the money

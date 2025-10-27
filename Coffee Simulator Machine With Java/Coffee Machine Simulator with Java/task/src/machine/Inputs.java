@@ -12,8 +12,19 @@ public class Inputs {
     }
 
     public String chooseAction() {
-        System.out.println("Write action (buy, fill, take):");
+        System.out.println("Write action (buy, fill, take, remaining, exit):");
         String choice = readInput.nextLine();
+
+        String[] validChoices = {"buy", "fill", "take", "remaining", "exit"};
+
+        boolean isValid = Arrays.asList(validChoices).contains(choice);
+
+        while (!isValid) {
+            System.out.println("Please choose between (buy, fill, take, remaining, exit):");
+
+            choice = readInput.nextLine();
+            isValid = Arrays.asList(validChoices).contains(choice);
+        }
 
         return choice;
     }
@@ -32,6 +43,12 @@ public class Inputs {
         };
 
         String choice = choiceSwitch.get();
+
+        while (choice.equals("Invalid")) {
+            System.out.println("Please enter 1 - espresso, 2 - latte, 3 - cappuccino:");
+            choice = choiceSwitch.get();
+        }
+
 
         return choice;
     }
