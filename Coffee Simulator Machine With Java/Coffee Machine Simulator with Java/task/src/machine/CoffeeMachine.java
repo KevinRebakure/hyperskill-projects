@@ -14,13 +14,15 @@ public class CoffeeMachine {
         Inputs input = new Inputs(readInput);
         Fill refill = new Fill(readInput, store, message);
 
-
         message.showCurrentMachineStatus();
 
         while (true) {
             String action  = input.chooseAction();
 
-            if (action.equals("exit")) break;
+            if (action.equals("exit")) {
+                System.exit(0);
+                break;
+            }
 
             switch (action) {
                 case "buy":
