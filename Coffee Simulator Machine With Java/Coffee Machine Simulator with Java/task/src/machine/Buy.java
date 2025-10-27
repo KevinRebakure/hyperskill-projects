@@ -9,13 +9,15 @@ package machine;
 public class Buy {
     private final String type;
     private final Store store;
+    private final Message message;
 
     private int money;
     private boolean coffeMade = true;
 
-    public Buy(String type, Store store) {
+    public Buy(String type, Store store, Message message) {
         this.store = store;
         this.type = type;
+        this.message = message;
     }
 
     public void buyCoffee() {
@@ -44,11 +46,7 @@ public class Buy {
                 System.out.println("Invalid type");
         }
 
-        System.out.println("The coffee machine has:");
-        System.out.println(String.format("%d ml of water", store.getWater()));
-        System.out.println(String.format("%d ml of milk", store.getMilk()));
-        System.out.println(String.format("%d g of coffee beans", store.getCoffeeBeans()));
-        System.out.println(String.format("$%d of money", store.getMoney()));
+        message.showCurrentMachineStatus();
     }
 
     private int checkIfAvailable(int capacity, int request, String unit) {
