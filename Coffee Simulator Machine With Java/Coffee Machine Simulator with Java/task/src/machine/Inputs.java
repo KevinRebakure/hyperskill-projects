@@ -12,15 +12,15 @@ public class Inputs {
     }
 
     public String chooseAction() {
-        System.out.println("Write action (buy, fill, take, remaining, exit):");
+        System.out.println("Write action (buy, fill, take, clean, remaining, exit):");
         String choice = readInput.nextLine();
 
-        String[] validChoices = {"buy", "fill", "take", "remaining", "exit"};
+        String[] validChoices = {"buy", "fill", "take", "clean", "remaining", "exit"};
 
         boolean isValid = Arrays.asList(validChoices).contains(choice);
 
         while (!isValid) {
-            System.out.println("Please choose between (buy, fill, take, remaining, exit):");
+            System.out.println("Please choose between (buy, fill, take, clean, remaining, exit):");
 
             choice = readInput.nextLine();
             isValid = Arrays.asList(validChoices).contains(choice);

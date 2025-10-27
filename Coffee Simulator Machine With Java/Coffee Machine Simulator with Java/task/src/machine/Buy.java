@@ -8,6 +8,8 @@ public class Buy {
     private int money;
     private boolean coffeMade = true;
 
+    private static int numberOfCoffeesMade = 0;
+
     public Buy(String type, Store store, Message message) {
         this.store = store;
         this.type = type;
@@ -15,6 +17,11 @@ public class Buy {
     }
 
     public void buyCoffee() {
+        if (Buy.getNumberOfCoffeesMade() == 10) {
+            System.out.println("I need cleaning!");
+            return;
+        }
+
         switch (type) {
             case "espresso":
                 store.setWater(checkIfAvailable(store.getWater(), 250, "ml", "water"));
@@ -57,6 +64,16 @@ public class Buy {
         if (coffeMade) {
             store.setMoney(store.getMoney() + amount);
             message.haveEnoughResources();
+
+            numberOfCoffeesMade += 1;
         }
+    }
+
+    public static int getNumberOfCoffeesMade() {
+        return numberOfCoffeesMade;
+    }
+
+    public static void setNumberOfCoffeesMade(int numberOfCoffeesMade) {
+        Buy.numberOfCoffeesMade = numberOfCoffeesMade;
     }
 }

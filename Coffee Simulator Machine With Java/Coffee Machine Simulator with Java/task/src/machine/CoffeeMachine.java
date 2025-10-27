@@ -46,11 +46,19 @@ public class CoffeeMachine {
                 case "remaining":
                     message.showCurrentMachineStatus();
                     break;
+                case "clean":
+                    cleanCoffeeMachine();
+                    break;
                 default:
                     System.out.println("Server error!");
             }
         }
 
         readInput.close();
+    }
+
+    public static void cleanCoffeeMachine() {
+        System.out.println("I have been cleaned!");
+        Buy.setNumberOfCoffeesMade(0);
     }
 }
