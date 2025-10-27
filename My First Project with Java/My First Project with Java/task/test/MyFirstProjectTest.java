@@ -7,6 +7,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+// Bubblegum: $202.0
+// Toffee: $118.0
+// Ice cream: $2250.0
+// Milk chocolate: $1680.0
+// Doughnut: $1075.0
+// Pancake: $80.0
+//
+// Income: $5405.0
+
 public class MyFirstProjectTest extends StageTest {
     @DynamicTest
     CheckResult testFirstProject() {
@@ -16,30 +25,37 @@ public class MyFirstProjectTest extends StageTest {
         int output_length = (int) Arrays.stream(output.split("\n")).filter(line -> !line.isEmpty()).count();
         if (output.isEmpty()) {
             return CheckResult.wrong("Your program didn't print any output.");
-        } else if (output_length != 7) {
-            return CheckResult.wrong(String.format("Your program should output 7 lines, but %s lines were found.",
+        } else if (output_length != 8) {
+            return CheckResult.wrong(String.format("Your program should output 8 lines, but %s lines were found.",
                     output_length));
         }
-        if (!output.contains("prices")) {
-            return CheckResult.wrong("Your program didn't print the 'Prices:' line");
+        if (!output.contains("earned")) {
+            return CheckResult.wrong("Your program didn't print the 'Earned amount' line");
         }
         Map<String, String> map = new HashMap<>() {{
-            put("Bubblegum", "2");
-            put("Toffee", "0.2");
-            put("Ice cream", "5");
-            put("Milk chocolate", "4");
-            put("Doughnut", "2.5");
-            put("Pancake", "3.2");
+            put("Bubblegum", "202");
+            put("Toffee", "118");
+            put("Ice cream", "2250");
+            put("Milk chocolate", "1680");
+            put("Doughnut", "1075");
+            put("Pancake", "80");
         }};
         for (String name : map.keySet()) {
             if (!output.contains(name.toLowerCase())) {
                 return CheckResult.wrong(String.format("Your program should print the '%s' as an item", name));
             }
         }
-        for (String price : map.values()) {
-            if (!output.contains(price)) {
-                return CheckResult.wrong(String.format("Incorrect price for %s", price));
+        if (!output.contains("income")) {
+            return CheckResult.wrong("Your program should print the 'Income' on a separate line");
+        }
+        for (String name : map.keySet()) {
+            if (!output.contains(map.get(name))) {
+                return CheckResult.wrong(String.format("Incorrect earned amount for %s.", name));
             }
+        }
+        if (!output.contains("5405")) {
+            return CheckResult.wrong("Incorrect total income! Make sure you didn’t print the total income value from " +
+                    "the examples, calculate it based on the earnings from the table in description.");
         }
         return CheckResult.correct();
     }
