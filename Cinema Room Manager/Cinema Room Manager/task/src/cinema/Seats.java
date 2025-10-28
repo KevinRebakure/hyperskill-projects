@@ -1,7 +1,6 @@
 package cinema;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Seats {
     private int rows;
@@ -10,6 +9,9 @@ public class Seats {
     private final Scanner scanner;
     private int selectedRowNumber;
     private int selectedSeatNumber;
+    // Mapping rows to seats. 1 -> [1,2,3,4,5]
+    // This means row 1 has seats: 1,2,3,4,5
+    private static final Map<Integer, ArrayList<Integer>> seats = new HashMap<>();
 
     public Seats(Scanner scanner) {
         this.scanner = scanner;
@@ -18,11 +20,11 @@ public class Seats {
         this.totalSeats = this.rows + this.seatsPerRow;
     }
 
-    private byte readValue(String message, int min, int max) {
+    private int readValue(String message, int min, int max) {
         System.out.println(message);
         assert scanner != null;
 
-        byte value = 0;
+        int value = 0;
         boolean valid = false;
 
         while (!valid) {
@@ -89,6 +91,29 @@ public class Seats {
             }
         }
         System.out.println();
+    }
+
+    public void bookASeat(){
+        // 1 -> [1,2,4]
+        // 2 -> [1,3,4]
+
+        // check if the seat is available
+        // save a seat
+
+        int rowNumber = readValue("Enter row number: ", 1, rows);
+        int seatNumber =  readValue("Enter a seat number in that row: ", 1, seatsPerRow);
+
+        if (getSeats().containsKey(rowNumber)) {
+            getSeats().get(rowNumber).add(seatNumber);
+        } else {
+            getSeats().put(rowNumber, new ArrayList<>(List.of(seatNumber)));
+        }
+
+        System.out.println(getSeats());
+    }
+
+    public Map<Integer, ArrayList<Integer>> getSeats() {
+        return seats;
     }
 
     public int getRows() {

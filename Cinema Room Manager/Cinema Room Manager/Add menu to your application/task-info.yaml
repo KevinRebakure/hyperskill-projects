@@ -12,12 +12,6 @@ files:
   - name: test/CinemaTests.java
     visible: false
     learner_created: false
-  - name: src/cinema/Message.java
-    visible: true
-    learner_created: true
-  - name: src/cinema/Inputs.java
-    visible: true
-    learner_created: true
 feedback_link: https://hyperskill.org/projects/133/stages/712/implement#comment
 status: Unchecked
 record: -1

@@ -18,7 +18,7 @@ public class Cinema {
         Seats seats = new Seats(scanner);
         Pricing pricingModal = new Pricing(seats.getRows(), seats.getSeatsPerRow());
         Message message = new Message();
-        Inputs inputs = new Inputs(scanner, message);
+        Inputs inputs = new Inputs(scanner, message, seats);
 
         while (true) {
             switch (inputs.chooseMenuOption()) {
@@ -27,6 +27,7 @@ public class Cinema {
                     break;
                 case 2:
                     System.out.println("Buy a ticket");
+                    seats.bookASeat();
                     break;
                 case 3:
                     System.exit(0);

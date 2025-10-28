@@ -7,9 +7,11 @@ import java.util.Scanner;
 public class Inputs {
     private final Scanner scanner;
     private final Message message;
-    public Inputs(Scanner scanner, Message message) {
+    private final Seats seats;
+    public Inputs(Scanner scanner, Message message, Seats seats) {
         this.scanner = scanner;
         this.message = message;
+        this.seats = seats;
     }
 
     public int chooseMenuOption() {
@@ -34,5 +36,31 @@ public class Inputs {
             }
         }
         return choice;
+    }
+
+    private byte readValue(String message, int min, int max) {
+        System.out.println(message);
+        assert scanner != null;
+
+        byte value = 0;
+        boolean valid = false;
+
+        while (!valid) {
+            try {
+                value = scanner.nextByte();
+
+                if (value >= min || value <= max) {
+                    valid = true;
+                } else {
+                    System.out.printf("Please enter a value between %d and %d: %n", min, max);
+                    System.out.println();
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.printf("Please enter a value between %d and %d: %n", min, max);
+            }
+        }
+
+        return value;
     }
 }
