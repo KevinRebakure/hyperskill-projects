@@ -50,16 +50,39 @@ public class Seats {
 
     public void printSeats() {
         System.out.println("Cinema: ");
+
         for (int i = 0; i < rows + 1 ; i++) {
             if (i == 0) {
-                System.out.print("  ");
-                for (int j = 1; j < seatsPerRow + 1; j++) {
-                    System.out.print(j + " ");
-                }
-                System.out.println();
+                printHeader();
             } else {
-                System.out.println(i + " " +"S ".repeat(seatsPerRow));
+                System.out.printf(i + " ");
+                printRowSeats(i);
             }
+        }
+        System.out.println();
+    }
+
+    private void printRowSeats(int i) {
+        var currentRow = getSeats().get(i);
+
+        if (currentRow != null) {
+            for (int j = 1; j <= seatsPerRow; j++) {
+                if (currentRow.contains(j)) {
+                    System.out.print("B ");
+                } else {
+                    System.out.print("S ");
+                }
+            }
+            System.out.println();
+        } else {
+            System.out.println("S ".repeat(seatsPerRow));
+        }
+    }
+
+    private void printHeader() {
+        System.out.print("  ");
+        for (int j = 1; j < seatsPerRow + 1; j++) {
+            System.out.print(j + " ");
         }
         System.out.println();
     }
@@ -125,8 +148,6 @@ public class Seats {
 
         System.out.printf("Ticket price: $%d", pricingModal.ticketPrice(rowNumber));
         System.out.println();
-
-        System.out.println(getSeats());
     }
 
     public Map<Integer, ArrayList<Integer>> getSeats() {

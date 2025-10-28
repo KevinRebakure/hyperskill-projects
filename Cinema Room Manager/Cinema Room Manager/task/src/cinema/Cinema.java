@@ -2,9 +2,9 @@ package cinema;
 
 import java.util.Scanner;
 
-// 1. read rows and seats
-// 2. Show seats - empty seats S, taken seats B
-// 3. buy a ticket
+// 1. ✅ read rows and seats
+// 2. ✅ Show seats - empty seats S, taken seats B
+// 3. ✅ buy a ticket
 // 4. exit
 
 
@@ -32,7 +32,7 @@ public class Cinema {
                     System.out.println("Buy a ticket");
                     seats.bookASeat();
                     break;
-                case 3:
+                case 0:
                     System.exit(0);
                     break;
                 default:
