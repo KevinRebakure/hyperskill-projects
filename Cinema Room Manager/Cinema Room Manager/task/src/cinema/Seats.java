@@ -1,5 +1,6 @@
 package cinema;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Seats {
@@ -20,14 +21,24 @@ public class Seats {
     private byte readValue(String message, int min, int max) {
         System.out.println(message);
         assert scanner != null;
-        byte value = scanner.nextByte();
 
-        while (value < min || value > max) {
-            System.out.printf("Please enter a value between %d and %d: %n", min, max);
-            System.out.println();
+        byte value = 0;
+        boolean valid = false;
 
-            value = scanner.nextByte();
-            System.out.println();
+        while (!valid) {
+            try {
+                value = scanner.nextByte();
+
+                if (value >= min || value <= max) {
+                    valid = true;
+                } else {
+                    System.out.printf("Please enter a value between %d and %d: %n", min, max);
+                    System.out.println();
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.printf("Please enter a value between %d and %d: %n", min, max);
+            }
         }
 
         return value;
@@ -46,6 +57,7 @@ public class Seats {
                 System.out.println(i + " " +"S ".repeat(seatsPerRow));
             }
         }
+        System.out.println();
     }
 
     public void showChosenSeat() {

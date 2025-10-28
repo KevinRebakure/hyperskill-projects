@@ -2,28 +2,14 @@ package cinema;
 
 import java.util.Scanner;
 
-//☑️ read number of rows
-// ️☑️ read number of seats in each row
-
-// ✅ read row number
-// ✅ read seat number
-
-// same rules as the previous task
-
-// PROGRAM FLOW
-// -------------
-// 1. ✅ Print out all seats in the room
-// 2. ✅ Mark the chosen seat with B symbol
-// 3. ✅ Print ticket price
+// 1. read rows and seats
+// 2. Show seats - empty seats S, taken seats B
+// 3. buy a ticket
+// 4. exit
 
 
-// CONDITIONS
-// ----------
-// if number of seats is not >60 - each seat $10
-// in a larger room, 1st front half - each seat $10
-//                   2nd back half - each seat $8
-// if number of rows is odd like 9, the first half is 4, second 5
-// number of rows and seats won't be greater than 9
+// if you buy a ticket
+// [row, seat]
 
 public class Cinema {
 
@@ -31,20 +17,23 @@ public class Cinema {
         Scanner scanner = new Scanner(System.in);
         Seats seats = new Seats(scanner);
         Pricing pricingModal = new Pricing(seats.getRows(), seats.getSeatsPerRow());
+        Message message = new Message();
+        Inputs inputs = new Inputs(scanner, message);
 
-        seats.printSeats();
-        System.out.println();
-
-        seats.selectARow();
-        seats.selectASeat();
-
-        int ticketPrice = pricingModal.ticketPrice(seats.getSelectedRow());
-        System.out.printf("Ticket price: $%d", ticketPrice);
-        System.out.println();
-        System.out.println();
-
-        seats.showChosenSeat();
-
-        scanner.close();
+        while (true) {
+            switch (inputs.chooseMenuOption()) {
+                case 1:
+                    seats.printSeats();
+                    break;
+                case 2:
+                    System.out.println("Buy a ticket");
+                    break;
+                case 3:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid");
+            }
+        }
     }
 }
