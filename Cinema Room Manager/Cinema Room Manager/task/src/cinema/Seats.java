@@ -12,6 +12,8 @@ public class Seats {
     // Mapping rows to seats. 1 -> [1,2,3,4,5]
     // This means row 1 has seats: 1,2,3,4,5
     private static final Map<Integer, ArrayList<Integer>> seats = new HashMap<>();
+    private Pricing pricingModal;
+
 
     public Seats(Scanner scanner) {
         this.scanner = scanner;
@@ -97,17 +99,32 @@ public class Seats {
         // 1 -> [1,2,4]
         // 2 -> [1,3,4]
 
-        // check if the seat is available
-        // save a seat
+        // ✅ check if the seat is available
+        // ✅ save a seat
+        // show ticket price
+        // show seats (available and unavailable seats)
 
         int rowNumber = readValue("Enter row number: ", 1, rows);
         int seatNumber =  readValue("Enter a seat number in that row: ", 1, seatsPerRow);
 
         if (getSeats().containsKey(rowNumber)) {
-            getSeats().get(rowNumber).add(seatNumber);
+            List<Integer> seatsInSelectedRow = getSeats().get(rowNumber);
+
+            if (seatsInSelectedRow.contains(seatNumber)) {
+                System.out.println("Seat was already taken!");
+            } else {
+                seatsInSelectedRow.add(seatNumber);
+            }
         } else {
             getSeats().put(rowNumber, new ArrayList<>(List.of(seatNumber)));
         }
+
+        if (pricingModal == null) {
+            throw new IllegalStateException("Pricing model not initialized. Call setPricing() first.");
+        }
+
+        System.out.printf("Ticket price: $%d", pricingModal.ticketPrice(rowNumber));
+        System.out.println();
 
         System.out.println(getSeats());
     }
@@ -152,5 +169,9 @@ public class Seats {
 
     public void selectASeat() {
         this.selectedSeatNumber = readValue("Enter a seat number in that row:", 1, seatsPerRow);
+    }
+
+    public void setPricingModal(Pricing pricingModal) {
+        this.pricingModal = pricingModal;
     }
 }

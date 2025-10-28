@@ -1,36 +1,32 @@
 package cinema;
 
 public class Pricing {
-    private final int rows;
-    private final int seatsPerRow;
-    private final int totalSeats;
+    private final Seats seats;
 
-    public Pricing(int rows, int seatsPerRow) {
-        this.rows = rows;
-        this.seatsPerRow = seatsPerRow;
-        totalSeats = rows * seatsPerRow;
+    public Pricing(Seats seats) {
+        this.seats = seats;
     }
 
     public int calculateRevenue() {
-        if (totalSeats <= 60) {
-            return totalSeats * 10;
+        if (seats.getTotalSeats() <= 60) {
+            return seats.getTotalSeats() * 10;
         }
 
-        boolean hasEvenRows = rows % 2 == 0;
+        boolean hasEvenRows = seats.getRows() % 2 == 0;
         if (hasEvenRows) {
-            int half = totalSeats / 2;
+            int half = seats.getTotalSeats() / 2;
             return (half * 10) + (half * 8);
         } else {
-            int firstHalf = rows / 2;
-            int secondHalf = rows - firstHalf;
-            return (firstHalf * seatsPerRow * 10) + (secondHalf * seatsPerRow * 8);
+            int firstHalf = seats.getRows() / 2;
+            int secondHalf = seats.getRows() - firstHalf;
+            return (firstHalf * seats.getSeatsPerRow() * 10) + (secondHalf * seats.getSeatsPerRow() * 8);
         }
     }
 
     public int ticketPrice(int rowNumber) {
-        if (totalSeats <= 60) return 10;
+        if (seats.getTotalSeats() <= 60) return 10;
 
-        boolean sittingInFirstHalf = rowNumber <= rows / 2;
+        boolean sittingInFirstHalf = rowNumber <= seats.getRows() / 2;
 
         return sittingInFirstHalf ? 10 : 8;
     }

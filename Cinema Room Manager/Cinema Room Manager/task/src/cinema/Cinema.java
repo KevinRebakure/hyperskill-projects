@@ -16,7 +16,10 @@ public class Cinema {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Seats seats = new Seats(scanner);
-        Pricing pricingModal = new Pricing(seats.getRows(), seats.getSeatsPerRow());
+        Pricing pricingModal = new Pricing(seats);
+
+        seats.setPricingModal(pricingModal);
+
         Message message = new Message();
         Inputs inputs = new Inputs(scanner, message, seats);
 
