@@ -19,7 +19,7 @@ public class Seats {
         this.scanner = scanner;
         this.rows = readValue("Enter the number of rows: ", 1, 9);
         this.seatsPerRow = readValue("Enter the number of seats in each row: ", 1, 9);
-        this.totalSeats = this.rows + this.seatsPerRow;
+        this.totalSeats = this.rows * this.seatsPerRow;
     }
 
     private int readValue(String message, int min, int max) {
@@ -31,13 +31,13 @@ public class Seats {
 
         while (!valid) {
             try {
-                value = scanner.nextByte();
+                value = scanner.nextInt();
 
-                if (value >= min || value <= max) {
+                if (value >= min && value <= max) {
                     valid = true;
                 } else {
+                    System.out.println("Wrong input!");
                     System.out.printf("Please enter a value between %d and %d: %n", min, max);
-                    System.out.println();
                 }
             } catch (InputMismatchException e) {
                 scanner.nextLine();
@@ -124,8 +124,8 @@ public class Seats {
 
         // ✅ check if the seat is available
         // ✅ save a seat
-        // show ticket price
-        // show seats (available and unavailable seats)
+        // ✅ show ticket price
+        // ✅ show seats (available and unavailable seats)
 
         int rowNumber = readValue("Enter row number: ", 1, rows);
         int seatNumber =  readValue("Enter a seat number in that row: ", 1, seatsPerRow);
@@ -134,19 +134,30 @@ public class Seats {
             List<Integer> seatsInSelectedRow = getSeats().get(rowNumber);
 
             if (seatsInSelectedRow.contains(seatNumber)) {
-                System.out.println("Seat was already taken!");
+                System.out.println("That ticket has already been purchased!");
             } else {
                 seatsInSelectedRow.add(seatNumber);
+
+                updateStatistics(rowNumber);
             }
         } else {
             getSeats().put(rowNumber, new ArrayList<>(List.of(seatNumber)));
+
+            updateStatistics(rowNumber);
         }
 
         if (pricingModal == null) {
             throw new IllegalStateException("Pricing model not initialized. Call setPricing() first.");
         }
+    }
 
-        System.out.printf("Ticket price: $%d", pricingModal.ticketPrice(rowNumber));
+    private void updateStatistics(int rowNumber) {
+        int ticketPrice = pricingModal.ticketPrice(rowNumber);
+        pricingModal.setCurrentIncome(pricingModal.getCurrentIncome() + ticketPrice);
+        pricingModal.setPurchasedTickets(pricingModal.getPurchasedTickets() + 1);
+        pricingModal.setPercentage((double) Math.round(((float) pricingModal.getPurchasedTickets() / getTotalSeats()) * 100 * 100) / 100);
+
+        System.out.printf("Ticket price: $%d", ticketPrice);
         System.out.println();
     }
 

@@ -16,7 +16,7 @@ public class Inputs {
 
     public int chooseMenuOption() {
         boolean valid = false;
-        List<Integer> validChoices = List.of(1,2,0);
+        List<Integer> validChoices = List.of(1,2,3,0);
 
         int choice = 0;
 

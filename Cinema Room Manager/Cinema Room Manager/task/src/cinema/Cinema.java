@@ -20,7 +20,7 @@ public class Cinema {
 
         seats.setPricingModal(pricingModal);
 
-        Message message = new Message();
+        Message message = new Message(pricingModal);
         Inputs inputs = new Inputs(scanner, message, seats);
 
         while (true) {
@@ -31,6 +31,9 @@ public class Cinema {
                 case 2:
                     System.out.println("Buy a ticket");
                     seats.bookASeat();
+                    break;
+                case 3:
+                    message.showStatistics();
                     break;
                 case 0:
                     System.exit(0);
