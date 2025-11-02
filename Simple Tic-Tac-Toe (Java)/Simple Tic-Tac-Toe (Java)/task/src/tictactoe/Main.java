@@ -10,68 +10,59 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter cells: ");
-        String input = scanner.nextLine();
-
-        // rows
-        List<String> row1 = Arrays.asList(input.substring(0, 3).split(""));
-        List<String> row2 = Arrays.asList(input.substring(3, 6).split(""));
-        List<String> row3 = Arrays.asList(input.substring(6, 9).split(""));
+        // empty rows
+        List<String> row1 = Arrays.asList("_", "_", "_");
+        List<String> row2 = Arrays.asList("_", "_", "_");
+        List<String> row3 = Arrays.asList("_", "_", "_");
 
         // matrix
         List<List<String>> matrix = List.of(row1, row2, row3);
 
         printMatrix(matrix);
 
-        System.out.print("Enter the coordinates: ");
-        getInput(matrix, scanner);
+        char currentPlayer = 'X';
+        boolean gameNotFinished = true;
 
-        printMatrix(matrix);
+        while (gameNotFinished) {
+            System.out.print("Enter the coordinates: ");
+            getInput(matrix, scanner, currentPlayer);
+            printMatrix(matrix);
 
-        /* Commented out for this stage - will be used in final stage
-        int countX = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "X")).count();
-        int countO = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "O")).count();
-        int countSpaces = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "_")).count();
+            int countX = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "X")).count();
+            int countO = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "O")).count();
+            int countSpaces = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "_")).count();
 
-        // Reset flags before checking
-        xWins = false;
-        oWins = false;
+            // Reset flags before checking
+            xWins = false;
+            oWins = false;
 
-        checkRows(matrix);
-        checkColumns(matrix);
-        checkDiagonals(matrix);
+            checkRows(matrix);
+            checkColumns(matrix);
+            checkDiagonals(matrix);
 
-        if (Math.abs(countX - countO) > 1) {
-            System.out.println("Impossible");
-            return;
+            if (Math.abs(countX - countO) > 1 || (xWins && oWins)) {
+                System.out.println("Impossible");
+                gameNotFinished = false;
+            } else if (xWins) {
+                System.out.println("X wins");
+                gameNotFinished = false;
+            } else if (oWins) {
+                System.out.println("O wins");
+                gameNotFinished = false;
+            } else if (countSpaces == 0) {
+                System.out.println("Draw");
+                gameNotFinished = false;
+            }
+
+            if (gameNotFinished) {
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            }
         }
 
-        if (xWins && oWins) {
-            System.out.println("Impossible");
-            return;
-        }
-
-        if (xWins) {
-            System.out.println("X wins");
-            return;
-        }
-
-        if (oWins) {
-            System.out.println("O wins");
-            return;
-        }
-
-        if (countSpaces == 0) {
-            System.out.println("Draw");
-            return;
-        }
-
-        System.out.println("Game not finished");
-        */
         scanner.close();
     }
 
-    public static void getInput(List<List<String>> matrix, Scanner scanner) {
+    public static void getInput(List<List<String>> matrix, Scanner scanner, char player) {
         boolean placed = false;
         while (!placed) {
             try {
@@ -90,7 +81,7 @@ public class Main {
                     continue;
                 }
 
-                matrix.get(x - 1).set(y - 1, "X");
+                matrix.get(x - 1).set(y - 1, String.valueOf(player));
                 placed = true;
             } catch (InputMismatchException e) {
                 System.out.println("You should enter numbers!");
