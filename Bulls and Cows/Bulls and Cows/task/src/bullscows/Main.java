@@ -6,81 +6,111 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please, enter the secret code's length:");
+        System.out.println("Input the length of the secret code:");
         int lengthOfSecret = scanner.nextInt();
         scanner.nextLine();
 
-        if (lengthOfSecret >= 11) {
-            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.\n");
+        System.out.println("Input the number of possible symbols in the code:");
+        int numberOfPossibleSymbols = scanner.nextInt();
+        scanner.nextLine();
+
+        if (lengthOfSecret > numberOfPossibleSymbols) {
+            System.out.printf("Error: it's not possible to generate a code with a length of %d with %d unique symbols.\n", lengthOfSecret, numberOfPossibleSymbols);
             return;
         }
 
-        String secret = generateSecret(lengthOfSecret);
-        System.out.printf("the random secret number is %s.\n", secret);
+        if (numberOfPossibleSymbols > 36) {
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            return;
+        }
+
+        String secret = generateSecret(lengthOfSecret, numberOfPossibleSymbols);
+
+        // Print the prepared secret message
+        printPreparedSecret(lengthOfSecret, numberOfPossibleSymbols);
+        System.out.println("Okay, let's start a game!");
 
         String guess = null;
         boolean won = false;
         int turns = 1;
 
         while (!won) {
-            System.out.printf("Turn %d\n", turns++);
+            System.out.printf("Turn %d:\n", turns++);
             guess = scanner.nextLine();
-            gradeGuess(guess, secret);
-
-            if (Objects.equals(secret, guess)) {
-                won = true;
-            }
+            won = gradeGuess(guess, secret);
         }
 
-        System.out.println("Congratulations! You guessed the secret code.\n");
+        System.out.println("Congratulations! You guessed the secret code.");
 
         scanner.close();
     }
 
-    private static String generateSecret(int lengthOfSecret) {
-        List<Integer> digits = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-            digits.add(i);
+    private static void printPreparedSecret(int length, int numSymbols) {
+        StringBuilder stars = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            stars.append("*");
         }
 
-        Collections.shuffle(digits);
+        String range;
+        if (numSymbols <= 10) {
+            range = String.format("(0-%d)", numSymbols - 1);
+        } else {
+            char lastLetter = (char) ('a' + numSymbols - 11);
+            range = String.format("(0-9, a-%c)", lastLetter);
+        }
+
+        System.out.printf("The secret is prepared: %s %s.\n", stars, range);
+    }
+
+    private static String generateSecret(int lengthOfSecret, int numberOfPossibleSymbols) {
+        List<Character> allCharacters = new ArrayList<>();
+
+        // add all numbers
+        for (int i = 0; i < 10; i++) {
+            allCharacters.add((char) ('0' + i));
+        }
+
+        // add all letters
+        for (int i = 0; i < 26; i++) {
+            allCharacters.add((char) ('a' + i));
+        }
+
+        List<Character> allowedRange = allCharacters.subList(0, numberOfPossibleSymbols);
+
+        Collections.shuffle(allowedRange);
 
         StringBuilder secret = new StringBuilder();
 
         for (int i = 0; i < lengthOfSecret; i++) {
-            secret.append(digits.get(i));
+            secret.append(allowedRange.get(i));
         }
 
         return secret.toString();
     }
 
-
-    private static void gradeGuess(String guess, String secret) {
-        String[] digits = guess.split("");
-
+    private static boolean gradeGuess(String guess, String secret) {
         int bulls = 0;
         int cows = 0;
 
-        for (int i = 0; i < digits.length; i++) {
-            String currentDigit = digits[i];
-            if (secret.contains(currentDigit)) {
-                if (secret.indexOf(currentDigit) == i) {
-                    bulls += 1;
-                } else {
-                    cows += 1;
-                }
+        for (int i = 0; i < guess.length(); i++) {
+            char currentChar = guess.charAt(i);
+            if (secret.indexOf(currentChar) == i) {
+                bulls += 1;
+            } else if (secret.indexOf(currentChar) != -1) {
+                cows += 1;
             }
         }
 
         if (bulls > 0 && cows > 0) {
-            System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.\n", bulls, cows, secret);
+            System.out.printf("Grade: %d bull(s) and %d cow(s)\n", bulls, cows);
         } else if (bulls > 0) {
-            System.out.printf("Grade: %d bull(s). The secret code is %s.\n", bulls, secret);
+            System.out.printf("Grade: %d bull(s)\n", bulls);
         } else if (cows > 0) {
-            System.out.printf("Grade: %d cow(s). The secret code is %s.\n", cows, secret);
+            System.out.printf("Grade: %d cow(s)\n", cows);
         } else {
-            System.out.printf("Grade: None. The secret code is %s.\n", secret);
+            System.out.println("Grade: None");
         }
+
+        return bulls == secret.length();
     }
 }
