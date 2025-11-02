@@ -1,28 +1,23 @@
 package tictactoe;
 
-import javax.swing.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Main {
+    private static boolean xWins = false;
+    private static boolean oWins = false;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Provide initial ");
         String input = scanner.nextLine();
 
         // rows
         List<String> row1 = List.of(input.substring(0, 3).split(""));
         List<String> row2 = List.of(input.substring(3, 6).split(""));
         List<String> row3 = List.of(input.substring(6, 9).split(""));
-
-        // columns
-        List<String> col1 = List.of(row1.getFirst(), row2.getFirst(), row3.getFirst());
-        List<String> col2 = List.of(row1.get(1), row2.get(1), row3.get(1));
-        List<String> col3 = List.of(row1.getLast(), row2.getLast(), row3.getLast());
-
-        // diagonals
-        List<String> diag1 = List.of(row1.getFirst(), row2.get(1), row3.getLast());
-        List<String> diag2 = List.of(row1.getLast(), row2.get(1), row3.getFirst());
 
         // matrix
         List<List<String>> matrix = List.of(row1, row2, row3);
@@ -36,36 +31,34 @@ public class Main {
         System.out.println("-".repeat(9));
 
         int countX = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "X")).count();
-        int countY = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "O")).count();
+        int countO = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "O")).count();
         int countSpaces = (int) matrix.stream().flatMap(List::stream).filter(x -> Objects.equals(x, "_")).count();
 
-        if (Math.abs(countX - countY) > 1 ) {
+        // Reset flags before checking
+        xWins = false;
+        oWins = false;
+
+        checkRows(matrix);
+        checkColumns(matrix);
+        checkDiagonals(matrix);
+
+        if (Math.abs(countX - countO) > 1) {
             System.out.println("Impossible");
             return;
         }
 
-        // check winners
-        List<String> rowWinner = checkRowOrColumn(row1, row2, row3);
-        List<String> colWinner = checkRowOrColumn(col1, col2, col3);
-        List<String> diagonalWinner = checkDiagonal(diag1, diag2);
-
-        if (rowWinner.size() > 1 || colWinner.size() > 1) {
+        if (xWins && oWins) {
             System.out.println("Impossible");
             return;
         }
 
-        if (rowWinner.size() == 1) {
-            System.out.println(rowWinner.getFirst() + " wins");
+        if (xWins) {
+            System.out.println("X wins");
             return;
         }
 
-        if (colWinner.size() == 1) {
-            System.out.println(colWinner.getFirst() + " wins");
-            return;
-        }
-
-        if (diagonalWinner.size() == 1) {
-            System.out.println(diagonalWinner.getFirst() + " wins");
+        if (oWins) {
+            System.out.println("O wins");
             return;
         }
 
@@ -74,41 +67,66 @@ public class Main {
             return;
         }
 
-        if (countSpaces > 0) {
-            System.out.println("Game not finished");
-            return;
-        }
-
+        System.out.println("Game not finished");
         scanner.close();
     }
 
-    public static List<String> checkRowOrColumn (List<String> row1, List<String> row2, List<String> row3) {
-        List<String> winner = new ArrayList<>();
-        if ((Objects.equals(row1.get(0), row1.get(1))) && (Objects.equals(row1.get(0), row1.get(2)))) {
-            winner.add(row1.getFirst());
+    public static void checkRows(List<List<String>> matrix) {
+        for (List<String> row : matrix) {
+            int xCount = 0;
+            for (String cell : row) {
+                if (Objects.equals(cell, "X")) xCount += 1;
+                else if (Objects.equals(cell, "O")) xCount -= 1;
+            }
+            if (xCount == 3) {
+                xWins = true;
+            } else if (xCount == -3) {
+                oWins = true;
+            }
         }
-
-        if ((Objects.equals(row2.get(0), row2.get(1))) && (Objects.equals(row2.get(0), row2.get(2)))) {
-            winner.add(row2.getFirst());
-        }
-
-        if ((Objects.equals(row3.get(0), row3.get(1))) && (Objects.equals(row3.get(0), row3.get(2)))) {
-            winner.add(row3.getFirst());
-        }
-
-        return winner;
     }
 
-    public static List<String> checkDiagonal (List<String> row1, List<String> row2) {
-        List<String> winner = new ArrayList<>();
-        if ((Objects.equals(row1.get(0), row1.get(1))) && (Objects.equals(row1.get(0), row1.get(2)))) {
-            winner.add(row1.getFirst());
+    public static void checkColumns(List<List<String>> matrix) {
+        for (int col = 0; col < 3; col++) {
+            int xCount = 0;
+            for (int row = 0; row < 3; row++) {
+                String cell = matrix.get(row).get(col);
+                if (Objects.equals(cell, "X")) xCount += 1;
+                else if (Objects.equals(cell, "O")) xCount -= 1;
+            }
+            if (xCount == 3) {
+                xWins = true;
+            } else if (xCount == -3) {
+                oWins = true;
+            }
+        }
+    }
+
+    public static void checkDiagonals(List<List<String>> matrix) {
+        // first diagonal
+        int xCount = 0;
+        for (int i = 0; i < 3; i++) {
+            String cell = matrix.get(i).get(i);
+            if (Objects.equals(cell, "X")) xCount += 1;
+            else if (Objects.equals(cell, "O")) xCount -= 1;
+        }
+        if (xCount == 3) {
+            xWins = true;
+        } else if (xCount == -3) {
+            oWins = true;
         }
 
-        if ((Objects.equals(row2.get(0), row2.get(1))) && (Objects.equals(row2.get(0), row2.get(2)))) {
-            winner.add(row2.getFirst());
+        // second diagonal
+        xCount = 0;
+        for (int i = 0; i < 3; i++) {
+            String cell = matrix.get(i).get(2 - i);
+            if (Objects.equals(cell, "X")) xCount += 1;
+            else if (Objects.equals(cell, "O")) xCount -= 1;
         }
-
-        return winner;
+        if (xCount == 3) {
+            xWins = true;
+        } else if (xCount == -3) {
+            oWins = true;
+        }
     }
 }

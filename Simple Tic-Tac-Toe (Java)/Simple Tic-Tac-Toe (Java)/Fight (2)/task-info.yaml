@@ -1,5 +1,5 @@
 type: edu
-custom_name: First move!
+custom_name: Fight!
 files:
   - name: src/tictactoe/Main.java
     visible: true
@@ -7,6 +7,6 @@ files:
   - name: test/TicTacToeTest.java
     visible: false
     learner_created: false
-feedback_link: https://hyperskill.org/projects/48/stages/258/implement#comment
+feedback_link: https://hyperskill.org/projects/48/stages/259/implement#comment
 status: Unchecked
 record: -1

@@ -2,7 +2,7 @@ type: framework
 content:
   - Welcome to the battlefield
   - The user is the gamemaster
-  - What's up on the field
-  - First move
   - Fight
+  - Fight (1)
+  - Fight (2)
 current_task: 2
