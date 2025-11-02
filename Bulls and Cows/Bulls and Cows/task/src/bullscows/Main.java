@@ -7,7 +7,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Please, enter the secret code's length:");
         int lengthOfSecret = scanner.nextInt();
+        scanner.nextLine();
 
         if (lengthOfSecret >= 11) {
             System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.\n");
@@ -17,8 +19,21 @@ public class Main {
         String secret = generateSecret(lengthOfSecret);
         System.out.printf("the random secret number is %s.\n", secret);
 
-//        String guess = scanner.nextLine();
-//        gradeGuess(guess, secret);
+        String guess = null;
+        boolean won = false;
+        int turns = 1;
+
+        while (!won) {
+            System.out.printf("Turn %d\n", turns++);
+            guess = scanner.nextLine();
+            gradeGuess(guess, secret);
+
+            if (Objects.equals(secret, guess)) {
+                won = true;
+            }
+        }
+
+        System.out.println("Congratulations! You guessed the secret code.\n");
 
         scanner.close();
     }
@@ -69,13 +84,13 @@ public class Main {
         }
 
         if (bulls > 0 && cows > 0) {
-            System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.", bulls, cows, secret);
+            System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.\n", bulls, cows, secret);
         } else if (bulls > 0) {
-            System.out.printf("Grade: %d bull(s). The secret code is %s.", bulls, secret);
+            System.out.printf("Grade: %d bull(s). The secret code is %s.\n", bulls, secret);
         } else if (cows > 0) {
-            System.out.printf("Grade: %d cow(s). The secret code is %s.", cows, secret);
+            System.out.printf("Grade: %d cow(s). The secret code is %s.\n", cows, secret);
         } else {
-            System.out.printf("Grade: None. The secret code is %s.", secret);
+            System.out.printf("Grade: None. The secret code is %s.\n", secret);
         }
     }
 }
