@@ -1,7 +1,6 @@
 package bullscows;
 
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,27 +38,18 @@ public class Main {
     }
 
     private static String generateSecret(int lengthOfSecret) {
+        List<Integer> digits = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            digits.add(i);
+        }
+
+        Collections.shuffle(digits);
+
         StringBuilder secret = new StringBuilder();
 
-        while (secret.length() < lengthOfSecret) {
-            long pseudoRandomNumber = System.nanoTime();
-            String[] randomNumberDigits = String.valueOf(pseudoRandomNumber).split("");
-
-            for (int i = randomNumberDigits.length - 1; i >= 0; i--) {
-                String currentDigit = randomNumberDigits[i];
-
-                if (secret.isEmpty() && currentDigit.equals("0")) {
-                    continue;
-                }
-
-                if (!secret.toString().contains(currentDigit) && Character.isDigit(currentDigit.charAt(0))) {
-                    secret.append(currentDigit);
-                }
-
-                if (secret.length() == lengthOfSecret) {
-                    break;
-                }
-            }
+        for (int i = 0; i < lengthOfSecret; i++) {
+            secret.append(digits.get(i));
         }
 
         return secret.toString();
