@@ -6,23 +6,34 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Input the length of the secret code:");
-        int lengthOfSecret = scanner.nextInt();
-        scanner.nextLine();
+        int lengthOfSecret = 0;
+        int numberOfPossibleSymbols = 0;
 
-        System.out.println("Input the number of possible symbols in the code:");
-        int numberOfPossibleSymbols = scanner.nextInt();
-        scanner.nextLine();
+        try {
+            System.out.println("Input the length of the secret code:");
+            lengthOfSecret = scanner.nextInt();
+            scanner.nextLine();
 
-        if (lengthOfSecret > numberOfPossibleSymbols) {
-            System.out.printf("Error: it's not possible to generate a code with a length of %d with %d unique symbols.\n", lengthOfSecret, numberOfPossibleSymbols);
+            System.out.println("Input the number of possible symbols in the code:");
+            numberOfPossibleSymbols = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            String badInput = scanner.nextLine();
+            System.out.printf("Error: %s isn't a valid number.", badInput);
             return;
         }
 
-        if (numberOfPossibleSymbols > 36) {
-            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
-            return;
-        }
+        validateInputs(lengthOfSecret, numberOfPossibleSymbols);
+
+//        if (lengthOfSecret > numberOfPossibleSymbols) {
+//            System.out.printf("Error: it's not possible to generate a code with a length of %d with %d unique symbols.\n", lengthOfSecret, numberOfPossibleSymbols);
+//            return;
+//        }
+//
+//        if (numberOfPossibleSymbols > 36) {
+//            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+//            return;
+//        }
 
         String secret = generateSecret(lengthOfSecret, numberOfPossibleSymbols);
 
@@ -43,6 +54,18 @@ public class Main {
         System.out.println("Congratulations! You guessed the secret code.");
 
         scanner.close();
+    }
+
+    private static void validateInputs(int lengthOfSecret, int numberOfPossibleSymbols) {
+        if (numberOfPossibleSymbols > lengthOfSecret) {
+            System.out.println("Error: it's not possible to generate a code with a length of 6 with 5 unique symbols.");
+            System.exit(0);
+        }
+
+        if (numberOfPossibleSymbols > 36) {
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            System.exit(0);
+        }
     }
 
     private static void printPreparedSecret(int length, int numSymbols) {
