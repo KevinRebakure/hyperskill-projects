@@ -3,15 +3,39 @@ package traffic;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args){
+    private static volatile boolean systemOpen = false;
+    private static int roads;
+    private static int interval;
+    private static int secondsPassed = 0;
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Input input = new Input(scanner);
 
         Messages.welcome();
-        int roads = input.readValue("Input the number of roads: ");
-        int interval = input.readValue("Input the interval: ");
+        roads = input.readValue("Input the number of roads: ");
+        interval = input.readValue("Input the interval: ");
 
-        input.clear();  // Clear after initial input
+        // Create and start QueueThread
+        Thread queueThread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    Thread.sleep(1000);
+                    secondsPassed++;
+
+                    if (systemOpen) {
+                        printSystemInfo();
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        });
+        queueThread.setName("QueueThread");
+        queueThread.start();
+
+        input.clear();
         Messages.displayMenu();
         int option = input.readOption("");
 
@@ -24,17 +48,31 @@ public class Main {
                     System.out.println("Road deleted");
                     break;
                 case 3:
-                    System.out.println("System opened");
+                    systemOpen = true;
+                    scanner.nextLine(); // Wait for Enter
+                    systemOpen = false;
+                    input.clear();
                     break;
                 default:
                     System.out.println("Incorrect option. Try again.");
             }
 
-            scanner.nextLine();
-            input.clear();
+            if (option != 3) {
+                scanner.nextLine();
+                input.clear();
+            }
             Messages.displayMenu();
             option = input.readOption("");
         }
+
+        queueThread.interrupt();
         System.out.print("Bye!");
+    }
+
+    private static void printSystemInfo() {
+        System.out.println("! " + secondsPassed + "s. have passed since system startup !");
+        System.out.println("! Number of roads: " + roads + " !");
+        System.out.println("! Interval: " + interval + " !");
+        System.out.println("! Press \"Enter\" to open menu !");
     }
 }
