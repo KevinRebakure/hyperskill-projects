@@ -9,6 +9,12 @@ files:
   - name: test/SystemOutput.java
     visible: false
     learner_created: false
+  - name: src/traffic/CircularQueue.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/288/stages/1504/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sat, 08 Nov 2025 13:06:35 UTC"
+record: 5
