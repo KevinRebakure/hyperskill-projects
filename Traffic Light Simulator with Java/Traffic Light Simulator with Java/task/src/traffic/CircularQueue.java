@@ -1,53 +1,53 @@
 package traffic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CircularQueue {
-    private String[] queue;
-    private int front;
-    private int rear;
-    private int size;
+    private List<String> roads;
     private int capacity;
 
     public CircularQueue(int capacity) {
         this.capacity = capacity;
-        this.queue = new String[capacity];
-        this.front = 0;
-        this.rear = -1;
-        this.size = 0;
+        this.roads = new ArrayList<>();
     }
 
     public void add(String roadName) {
         if (!isFull()) {
-            rear = (rear + 1) % capacity;
-            queue[rear] = roadName;
-            size++;
+            roads.add(roadName);
         }
     }
 
-    public String remove() {
-        if (!isEmpty()) {
-            String removed = queue[front];
-            front = (front + 1) % capacity;
-            size--;
-            return removed;
+    public int removeIndex() {
+        return 0; // Always remove from front
+    }
+
+    public String removeAt(int index) {
+        if (!isEmpty() && index >= 0 && index < roads.size()) {
+            return roads.remove(index);
         }
         return null;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return roads.isEmpty();
     }
 
     public boolean isFull() {
-        return size == capacity;
+        return roads.size() >= capacity;
+    }
+
+    public int size() {
+        return roads.size();
+    }
+
+    public String[] getRoads() {
+        return roads.toArray(new String[0]);
     }
 
     public void printRoads() {
-        if (!isEmpty()) {
-            int index = front;
-            for (int i = 0; i < size; i++) {
-                System.out.println(queue[index]);
-                index = (index + 1) % capacity;
-            }
+        for (String road : roads) {
+            System.out.println(road);
         }
     }
 }
