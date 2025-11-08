@@ -6,9 +6,7 @@ summary: "<p>Do you know how traffic lights were invented? Some time ago, it was
   \ information to drivers about whether they can continue driving or not. In this\
   \ project, we will implement a simplified version of such a system for a road junction\
   \ in which many roads converge to one.<strong> </strong>You will practice concepts\
-  \ frequently tested in technical interviews at top tech companies.</p><br/><br/>Learn\
-  \ more at <a href=\"https://hyperskill.org/projects/288?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card\"\
-  >https://hyperskill.org/projects/288</a>"
+  \ frequently tested in technical interviews at top tech companies.</p>"
 programming_language: Java
 programming_language_version: 11
 content:
@@ -17,6 +15,8 @@ additional_files:
   - name: .idea/inspectionProfiles/Project_Default.xml
     visible: true
   - name: build.gradle
+    visible: true
   - name: settings.gradle
+    visible: true
 mode: Study
 yaml_version: 5
