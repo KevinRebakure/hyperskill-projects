@@ -11,12 +11,5 @@ programming_language: Java
 programming_language_version: 11
 content:
   - Traffic Light Simulator with Java
-additional_files:
-  - name: .idea/inspectionProfiles/Project_Default.xml
-    visible: true
-  - name: build.gradle
-    visible: true
-  - name: settings.gradle
-    visible: true
 mode: Study
 yaml_version: 5

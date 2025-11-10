@@ -11,7 +11,7 @@ package banking;
 
 -----------------------------------------------------------
 
-[] Print the menu
+✅ Print the menu
 [] 1. Create an account
         - Generate account number
         - Generate a PIN (0000 - 9999)
@@ -23,8 +23,33 @@ package banking;
         - 3. Exit
 */
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, world!");
+        var scanner = new Scanner(System.in);
+        var input = new Input(scanner);
+
+        while (true) {
+            Messages.menu();
+            try {
+                int option = input.selectOption();
+                switch (option) {
+                    case 1:
+                        System.out.println("Created an account");
+                        break;
+                    case 2:
+                        System.out.println("Logged in");
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        System.out.println("Invalid option");
+                }
+            } catch (RuntimeException e) {
+                System.out.println("Invalid option. Please choose (1,2,0)");
+            }
+        }
     }
 }
