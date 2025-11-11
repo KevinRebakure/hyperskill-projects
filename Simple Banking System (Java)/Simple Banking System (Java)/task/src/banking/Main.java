@@ -43,10 +43,18 @@ public class Main {
                         System.out.println(account.getAccountNumber());
                         System.out.println("Your card PIN: ");
                         System.out.println(account.getPin());
+                        System.out.println(Bank.accountList);
                         break;
                     case 2:
-                        System.out.println("Logged in");
-                        break;
+                        boolean loggedIn = Bank.login(scanner);
+
+                        if (loggedIn) {
+                            System.out.println("Your card has been logged in");
+                            break;
+                        } else  {
+                            System.out.println("Wrong card number or PIN!");
+                            break;
+                        }
                     case 0:
                         return;
                     default:

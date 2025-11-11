@@ -3,6 +3,7 @@ package banking;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Bank {
     static List<Account> accountList = new ArrayList<>();
@@ -23,7 +24,19 @@ public class Bank {
         return newAccount;
     }
 
-    public void login() {
-        System.out.println("Logged in");
+    public static boolean login(Scanner scanner) {
+        System.out.println("Enter your card number: ");
+        String accountNumber = scanner.nextLine();
+
+        System.out.println("Enter your PIN: ");
+        String pin = scanner.nextLine();
+
+        var existingAccount = accountList.stream().filter(account -> account.getAccountNumber().equals(accountNumber)).findFirst();
+
+        if (existingAccount.isPresent()) {
+            return  existingAccount.get().getPin().equals(pin);
+        } else {
+            return false;
+        }
     }
 }

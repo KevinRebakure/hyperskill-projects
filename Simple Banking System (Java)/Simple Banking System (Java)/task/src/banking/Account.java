@@ -25,4 +25,9 @@ public class Account {
     public String getPin() {
         return pin;
     }
+
+    @Override
+    public String toString() {
+        return accountNumber;
+    }
 }
