@@ -12,8 +12,8 @@ package banking;
 -----------------------------------------------------------
 
 ✅ Print the menu
-[] 1. Create an account
-        - Generate account number
+✅ 1. Create an account
+        - Generate account
         - Generate a PIN (0000 - 9999)
 [] 2. Log into account
         - Ask card info -> card number and pin
@@ -37,7 +37,12 @@ public class Main {
                 int option = input.selectOption();
                 switch (option) {
                     case 1:
-                        System.out.println("Created an account");
+                        var account = Bank.createAccount();
+                        System.out.println("Your card has been created");
+                        System.out.println("Your card number: ");
+                        System.out.println(account.getAccountNumber());
+                        System.out.println("Your card PIN: ");
+                        System.out.println(account.getPin());
                         break;
                     case 2:
                         System.out.println("Logged in");
