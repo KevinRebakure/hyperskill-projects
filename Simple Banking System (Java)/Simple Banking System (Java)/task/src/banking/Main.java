@@ -15,7 +15,7 @@ package banking;
 ✅ 1. Create an account
         - Generate account
         - Generate a PIN (0000 - 9999)
-[] 2. Log into account
+✅ 2. Log into account
         - Ask card info -> card number and pin
 [] 3. After logging in
         - 1. Balance -> to check balance
